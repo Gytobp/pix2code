@@ -19,11 +19,13 @@ if len(argv) < 1:
 else:
     input_path = argv[0]
 
+# distribution: d, 1/(d+1) of data is for eval, d/(d+1) of data is for training
 distribution = 6 if len(argv) < 2 else argv[1]
 
 TRAINING_SET_NAME = "training_set"
 EVALUATION_SET_NAME = "eval_set"
 
+# include in a list all file names which has both .gui and .png
 paths = []
 for f in os.listdir(input_path):
     if f.find(".gui") != -1:
@@ -34,10 +36,10 @@ for f in os.listdir(input_path):
             path_img = "{}/{}.png".format(input_path, file_name)
             paths.append(file_name)
 
-evaluation_samples_number = len(paths) / (distribution + 1)
-training_samples_number = evaluation_samples_number * distribution
+assert len(paths) == len(os.listdir(input_path))/2, "Error: not all files names have both .gui and .png"
 
-assert training_samples_number + evaluation_samples_number == len(paths)
+evaluation_samples_number = len(paths) // (distribution + 1)
+training_samples_number = len(paths) - evaluation_samples_number
 
 print("Splitting datasets, training samples: {}, evaluation samples: {}".format(training_samples_number, evaluation_samples_number))
 
@@ -60,6 +62,7 @@ for path in paths:
         content_hash = chars.replace(" ", "").replace("\n", "")
         content_hash = hashlib.sha256(content_hash.encode('utf-8')).hexdigest()
 
+        # if we have enough samples for evaluation, we add the sample to the evaluation set
         if len(eval_set) == evaluation_samples_number:
             train_set.append(path)
         else:

@@ -10,6 +10,8 @@ import sys
 
 from classes.dataset.Generator import *
 from classes.model.pix2code import *
+from classes.dataset.Dataset import *
+from classes.Vocabulary import *
 
 
 def run(input_path, output_path, is_memory_intensive=False, pretrained_model=None):
