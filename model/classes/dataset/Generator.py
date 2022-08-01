@@ -3,9 +3,9 @@ __author__ = 'Tony Beltramelli - www.tonybeltramelli.com'
 
 import numpy as np
 
-from model.classes.dataset.Dataset import *
-from model.classes.Vocabulary import *
-from model.classes.model.Config import *
+from classes.dataset.Dataset import *
+from classes.Vocabulary import *
+from classes.model.Config import *
 
 
 class Generator:
